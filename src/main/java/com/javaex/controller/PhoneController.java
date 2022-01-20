@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,16 +27,14 @@ public class PhoneController {
 
 	/*
 	 * @RequestMapping(value = "/phone/writeForm", method = { RequestMethod.GET,
-	 * RequestMethod.POST })
-	 *  public String writeForm() {
+	 * RequestMethod.POST }) public String writeForm() {
 	 * System.out.println("PhoneController > writeForm() ");
 	 * 
 	 * return "/WEB-INF/views/writeForm.jsp"; // return writeForm; 이라 써도 무방.
 	 * WebUtil의 (path)에 return값 넣는 메커니즘. }
 	 * 
 	 * @RequestMapping(value = "/phone/write", method = { RequestMethod.GET,
-	 * RequestMethod.POST }) 
-	 * public String write(@ModelAttribute PersonVo personVo)
+	 * RequestMethod.POST }) public String write(@ModelAttribute PersonVo personVo)
 	 * { System.out.println("PhoneController > write() "); //필드와 파라미터 이름이 동일할 시 스프링이
 	 * 자동으로 넣어줌
 	 * 
@@ -48,7 +47,7 @@ public class PhoneController {
 	public String writeForm() {
 		System.out.println("PhoneController > writeForm() ");
 
-		return "/WEB-INF/views/writeForm.jsp"; // return writeForm; 이라 써도 무방. WebUtil의 (path)에 return값 넣는 메커니즘.
+		return "writeForm"; // return writeForm; 이라 써도 무방. WebUtil의 (path)에 return값 넣는 메커니즘.
 	}
 
 	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
@@ -84,7 +83,7 @@ public class PhoneController {
 
 		// jsp정보를 리턴한다(view) cf>Model(데이터저장, model에 넣으면 리퀘스트어트리뷰트에 넣기로 했음) View(보여주기:
 		// 리퀘스트에서 꺼내씀) Control(조합조종)
-		return "/WEB-INF/views/list.jsp";
+		return "list";
 	}
 
 	@RequestMapping(value = "/updateForm", method = { RequestMethod.GET, RequestMethod.POST })
@@ -96,7 +95,7 @@ public class PhoneController {
 
 		model.addAttribute("personVo", personVo);
 
-		return "/WEB-INF/views/updateForm.jsp";
+		return "updateForm";
 	}
 
 	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST })
@@ -109,4 +108,27 @@ public class PhoneController {
 		return "redirect: /phone/list";
 	}
 
+	@RequestMapping(value = "/view", method = { RequestMethod.GET, RequestMethod.POST })
+	public String view(@RequestParam(value = "no") int no) {
+		System.out.println("@RequestParam으로 하기");
+		System.out.println(no + "번글 가져오기");
+
+		return "writeForm";
+	}
+
+	@RequestMapping(value = "/view/{no}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String view11(@PathVariable("no") int no) {
+		System.out.println("@PathVariable로 하기");
+		System.out.println(no + "번글 가져오기");
+
+		return "writeForm";
+	}
+
+	@RequestMapping(value = "{id}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blog(@PathVariable(value="id") String id) {
+		System.out.println("@PathVariable로 하기");
+		System.out.println(id + "의 블로그입니다");
+
+		return "writeForm";
+	}
 }

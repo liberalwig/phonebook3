@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>[Phonebook2]</h1>
+	<h1>[Phonebook3]</h1>
 
 	<h2>전화번호 등록폼</h2>
 
